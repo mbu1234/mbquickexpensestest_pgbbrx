@@ -1,0 +1,93 @@
+{
+  "appProperties": [],
+  "tasks": [
+    {
+      "id": "getExpenseEntries",
+      "routingPattern": "/",
+      "page": {
+        "id": "getExpenseEntries"
+      }
+    },
+    {
+      "id": "homeOLD",
+      "routingPattern": "/homeOLD",
+      "page": {
+        "id": "homeOLD"
+      }
+    },
+    {
+      "id": "getExpenseEntry",
+      "routingPattern": "/getExpenseEntry",
+      "page": {
+        "id": "getExpenseEntry"
+      }
+    },
+    {
+      "id": "patchExpenseEntry",
+      "routingPattern": "/patchExpenseEntry",
+      "page": {
+        "id": "patchExpenseEntry"
+      }
+    },
+    {
+      "id": "postExpenseEntry",
+      "routingPattern": "/postExpenseEntry",
+      "page": {
+        "id": "postExpenseEntry"
+      }
+    },
+    {
+      "id": "chartExpensedVSNew",
+      "routingPattern": "/chartExpensedVSNew",
+      "page": {
+        "id": "chartExpensedVSNew"
+      }
+    },
+    {
+      "id": "chartProcessedExpensesByCategory",
+      "routingPattern": "/chartProcessedExpensesByCategory",
+      "page": {
+        "id": "chartProcessedExpensesByCategory"
+      }
+    },
+    {
+      "id": "chartExpensesWithoutReceipt",
+      "routingPattern": "/chartExpensesWithoutReceipt",
+      "page": {
+        "id": "chartExpensesWithoutReceipt"
+      }
+    },
+    {
+      "id": "ChartProcessedExpenseTrendsByCategory",
+      "routingPattern": "/ChartProcessedExpenseTrendsByCategory",
+      "page": {
+        "id": "ChartProcessedExpenseTrendsByCategory"
+      }
+    },
+    {
+      "id": "home",
+      "routingPattern": "/home",
+      "page": {
+        "id": "home"
+      }
+    },
+    {
+      "id": "postExpenseEntryFromHub",
+      "routingPattern": "/postExpenseEntryFromHub",
+      "page": {
+        "id": "postExpenseEntryFromHub"
+      }
+    }
+  ],
+  "dataProviders": [
+    {
+      "key": "WORKDAY-EXPENSE",
+      "value": "https://api.workday.com/expense/v1"
+    },
+    {
+      "key": "COMMON",
+      "value": "https://api.us.wcp.workday.com/common/v1"
+    }
+  ],
+  "applicationId": "mbquickexpensestest_pgbbrx"
+}

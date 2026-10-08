@@ -1,0 +1,69 @@
+{
+  "id": "getExpenseEntry",
+  "endPoints": [
+    {
+      "name": "getCurrencies",
+      "baseUrlType": "COMMON",
+      "url": "/currencies",
+      "authType": "sso",
+      "isCollection": true
+    },
+    {
+      "name": "getExpenseEntry",
+      "baseUrlType": "WORKDAY-EXPENSE",
+      "url": "<% `/entries/{{queryParams.expenseEntryWID}}` %>",
+      "authType": "sso"
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "text",
+          "id": "dateWidget",
+          "label": "Date",
+          "value": "<% getExpenseEntry.date %>"
+        },
+        {
+          "type": "text",
+          "id": "memoWidget",
+          "label": "Memo",
+          "value": "<% getExpenseEntry.memo %>"
+        },
+        {
+          "type": "text",
+          "id": "merchantWidget",
+          "label": "Merchant",
+          "value": "<% getExpenseEntry.merchant ?? 'No merchant found' %>"
+        },
+        {
+          "type": "text",
+          "id": "amountWidget",
+          "label": "Merchant",
+          "value": "<% getExpenseEntry.amount.value %>"
+        },
+        {
+          "type": "text",
+          "id": "currencyWidget",
+          "label": "Currency",
+          "value": "<% getExpenseEntry.amount.currency %>"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "homePod"
+        }
+      ]
+    }
+  }
+}

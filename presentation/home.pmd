@@ -1,0 +1,74 @@
+{
+  "id": "home",
+  "presentation": {
+    "body": {
+      "type": "hub",
+      "label": "<% 'Fun with Expenses' %>",
+      "icon": "wd-accent-chart-bar-arrow",
+      "initialTask": {
+        "taskId": "getExpenseEntries"
+      },
+      "navigationTasks": [
+        {
+          "type": "item",
+          "task": {
+            "taskId": "getExpenseEntries"
+          },
+          "label": "All Expense Items"
+        },
+        {
+          "type": "group",
+          "label": "Data Entry",
+          "icon": "wd-icon-folder-close",
+          "items": [
+            {
+              "type": "item",
+              "task": {
+                "taskId": "postExpenseEntryFromHub"
+              },
+              "label": "Create New Expense"
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "task": {
+            "taskId": "chartExpensedVSNew"
+          },
+          "label": "% Breakdown (New vs Processed)"
+        },
+        {
+          "type": "item",
+          "task": {
+            "taskId": "chartProcessedExpensesByCategory"
+          },
+          "label": "Processed Expenses By Category"
+        },
+        {
+          "type": "item",
+          "task": {
+            "taskId": "ChartProcessedExpenseTrendsByCategory"
+          },
+          "label": "Some trends"
+        },
+        {
+          "type": "item",
+          "task": {
+            "taskId": "chartExpensesWithoutReceipt"
+          },
+          "label": "Expenses without receipt"
+        }
+      ],
+      "additionalLinks": {
+        "title": "Suggested Links",
+        "links": [
+          {
+            "type": "external",
+            "label": "<% 'Workday' %>",
+            "url": "<% 'https://www.workday.com' %>"
+          }
+        ]
+      }
+    }
+  }
+}

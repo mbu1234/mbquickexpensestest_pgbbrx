@@ -1,0 +1,145 @@
+{
+  "id": "getExpenseEntries",
+  "endPoints": [
+    {
+      "name": "getExpenseEntries",
+      "baseUrlType": "WORKDAY-EXPENSE",
+      "url": "/entries",
+      "authType": "sso",
+      "isCollection": true
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Display All Expenses"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "grid",
+          "id": "allExpenses",
+          "label": "All Expenses (Note: Only entries with a status of 'New' can be changed.)",
+          "rows": "<% getExpenseEntries.data %>",
+          "rowVariableName": "row",
+          "columns": [
+            {
+              "type": "column",
+              "columnId": "dateCol",
+              "label": "Date",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "date",
+                "id": "expDate",
+                "value": "<% row.date %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "merchantCol",
+              "label": "Merchant",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMerchant",
+                "value": "<% row.merchant %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "memoCol",
+              "label": "Memo",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMemo",
+                "value": "<% row.memo %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "amountCol",
+              "label": "Amount",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "currency",
+                "id": "expAmount",
+                "currencyCode": "<% row.amount.currency %>",
+                "value": "<% row.amount.value %>",
+                "showCurrencySymbol": true,
+                "fractionDigits": 2
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryStatusColId",
+              "label": "Entry Status",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expStatus",
+                "value": "<% row.expenseEntryStatus.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryTypeColId",
+              "label": "Entry Type",
+              "cellTemplate": {
+                "type": "text",
+                "id": "expType",
+                "value": "<% row.entryType.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryActionsCol",
+              "label": "Actions",
+              "cellTemplate": {
+                "type": "section",
+                "children": [
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "View",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "getExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "Edit",
+                    "render": "<% row.expenseEntryStatus.descriptor == 'New' %>",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "patchExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "homePod"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "id": "postExpenseEntry",
+  "endPoints": [ 
+    {
+      "name": "getCurrencies",
+      "baseUrlType": "COMMON",
+      "url": "/currencies",
+      "authType": "sso",
+      "isCollection": true
+    }
+  ],
+  "outboundData": {
+    "outboundEndPoints": [
+      {
+        "name": "postExpenseEntry",
+        "baseUrlType": "WORKDAY-EXPENSE",
+        "url": "/entries",
+        "authType": "sso",
+        "httpMethod": "POST",
+        "onSend": "<%
+           {
+            'date': dateWidget.value.format('yyyy-MM-dd'),
+            'memo': memoWidget.value,
+            'merchant': merchantWidget.value,
+            'amount': {
+              'value': amountWidget.value,
+              'currency': currencyWidget.value[0]
+             }
+           }
+        %>"
+      }
+    ]
+  },
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Workday Extend"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "date",
+          "id": "dateWidget",
+          "required": true,
+          "label": "Date"
+        },
+        {
+          "type": "text",
+          "id": "memoWidget",
+          "required": true,
+          "label": "Memo"
+        },
+        {
+          "type": "text",
+          "id": "merchantWidget",
+          "required": true,
+          "label": "Merchant"
+        },
+        {
+          "type": "text",
+          "id": "amountWidget",
+          "required": true,
+          "label": "Amount"
+        },
+        {
+          "type": "instanceList",
+          "id": "currencyWidget",
+          "label": "Currency",
+          "values": "<% getCurrencies.data %>",
+          "idKey": "code"
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "homePod"
+        }
+      ]
+    }
+  }
+}

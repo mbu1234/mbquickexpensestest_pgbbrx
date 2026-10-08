@@ -1,0 +1,236 @@
+{
+  "id": "ChartProcessedExpenseTrendsByCategory",
+  "endPoints": [
+    {
+      "name": "getExpenseEntries",
+      "baseUrlType": "WORKDAY-EXPENSE",
+      "url": "/entries",
+      "authType": "sso",
+      "isCollection": true
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "Processed Expenses (Key Trends)"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "grid",
+          "id": "allExpensesExpensed",
+          "label": "Processed Expenses",
+          "rows": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed') %>",
+          "rowVariableName": "row",
+          "columns": [
+            {
+              "type": "column",
+              "columnId": "dateCol",
+              "label": "Date",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "date",
+                "id": "expDate",
+                "value": "<% row.date %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "categoryCol",
+              "label": "Category",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expCategory",
+                "value": "<% row.expenseItem.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "memoCol",
+              "label": "Memo",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMemo",
+                "value": "<% row.memo %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "amountCol",
+              "label": "Amount",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "currency",
+                "id": "expAmount",
+                "currencyCode": "<% row.amount.currency %>",
+                "value": "<% row.amount.value %>",
+                "showCurrencySymbol": true,
+                "fractionDigits": 2
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "merchantCol",
+              "label": "Merchant",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMerchant",
+                "value": "<% row.merchant %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryStatusColId",
+              "label": "Entry Status",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expStatus",
+                "value": "<% row.expenseEntryStatus.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryTypeColId",
+              "label": "Entry Type",
+              "cellTemplate": {
+                "type": "text",
+                "id": "expType",
+                "value": "<% row.entryType.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryActionsCol",
+              "label": "Actions",
+              "cellTemplate": {
+                "type": "section",
+                "children": [
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "View",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "getExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "Edit",
+                    "render": "<% row.expenseEntryStatus.descriptor == 'New' %>",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "patchExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "lineChart2",
+          "categoryDataSet": {
+            "name": "Date",
+            "value": "<% data.date %>"
+          },
+          "data": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed' && row.expenseItem.descriptor == 'Lodging') %>",
+          "dataVariableName": "data",
+          "measurementDataSets": [
+            {
+              "name": "Amount (Lodging)",
+              "value": "<% data.amount.value %>",
+              "chartMarkLabel": "<% data.amount.value %>"
+            }
+          ],
+          "id": "Lodging",
+          "measurementAxisOptions": {
+            "axisIncrement": "100",
+            "axisMinimum": "600",
+            "axisMaximum": "1200"
+          },
+          "categoryAxisOptions": {}
+        },
+        {
+          "type": "lineChart2",
+          "categoryDataSet": {
+            "name": "Date",
+            "value": "<% data.date %>"
+          },
+          "data": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed' && row.expenseItem.descriptor == 'Car Rental & Fuel') %>",
+          "dataVariableName": "data",
+          "measurementDataSets": [
+            {
+              "name": "Amount (Car Rental & Fuel)",
+              "value": "<% data.amount.value %>",
+              "chartMarkLabel": "<% data.amount.value %>"
+            }
+          ],
+          "id": "Car Rental",
+          "measurementAxisOptions": {
+            "comparisonLineLabel": "Suggested Max",
+            "comparisonLineValue": "100"
+          }
+        },
+        {
+          "type": "lineChart2",
+          "categoryDataSet": {
+            "name": "Date",
+            "value": "<% data.date %>"
+          },
+          "data": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed' && row.expenseItem.descriptor == 'Airfare') %>",
+          "dataVariableName": "data",
+          "measurementDataSets": [
+            {
+              "name": "Amount (Airfare)",
+              "value": "<% data.amount.value %>",
+              "chartMarkLabel": "<% data.amount.value %>"
+            }
+          ],
+          "id": "Airfare",
+          "categoryAxisOptions": {},
+          "measurementAxisOptions": {
+            "axisIncrement": "50",
+            "axisMaximum": "1000",
+            "axisMinimum": "400"
+          }
+        },
+        {
+          "type": "waterfallChart2",
+          "categoryDataSet": {
+            "name": "Date",
+            "value": "<% data.date %>"
+          },
+          "data": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed' && row.expenseItem.descriptor == 'Car Rental & Fuel') %>",
+          "dataVariableName": "data",
+          "measurementDataSet": {
+            "name": "Amount (Car Rental & Fuel)",
+            "value": "<% data.amount.value %>"
+          }
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "homePod"
+        }
+      ]
+    }
+  }
+}

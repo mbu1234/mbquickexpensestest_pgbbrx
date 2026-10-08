@@ -1,0 +1,33 @@
+{
+  "id": "postExpenseEntryFromHub",
+  "endPoints": [ ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": ""
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "button",
+          "action": "PRIMARY",
+          "label": "Start Here",
+          "taskReference": {
+            "taskId": "postExpenseEntry"
+          }
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "homePod"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mbquickexpensestest_pgbbrx",
+  "applicationId": "mbquickexpensestest_pgbbrx",
+  "siteId": "mbquickexpensestest_pgbbrx",
+  "languages": [
+    {
+      "code": "en-US",
+      "description": "English"
+    }
+  ],
+  "siteAuth": {
+    "authTypes": [
+      {
+        "scheme": "SSO",
+        "id": "sso"
+      }
+    ]
+  }
+}

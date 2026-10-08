@@ -1,0 +1,14 @@
+{
+  "podId": "homePod",
+  "seed": {
+    "parameters": [ ],
+    "template": {
+      "type": "button",
+      "action": "LINK",
+      "label": "Main Menu",
+      "taskReference": {
+        "taskId": "home"
+      }
+    }
+  }
+}

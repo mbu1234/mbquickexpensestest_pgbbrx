@@ -1,0 +1,331 @@
+{
+  "id": "chartExpensedVSNew",
+  "endPoints": [
+    {
+      "name": "getExpenseEntries",
+      "baseUrlType": "WORKDAY-EXPENSE",
+      "url": "/entries",
+      "authType": "sso",
+      "isCollection": true
+    }
+  ],
+  "presentation": {
+    "title": {
+      "type": "title",
+      "label": "New vs Processed Expenses (Breakdown)"
+    },
+    "body": {
+      "type": "section",
+      "horizontal": false,
+      "children": [
+        {
+          "type": "grid",
+          "id": "allExpensesExpensed",
+          "label": "Processed Expenses",
+          "rows": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'New') %>",
+          "rowVariableName": "row",
+          "columns": [
+            {
+              "type": "column",
+              "columnId": "dateCol",
+              "label": "Date",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "date",
+                "id": "expDate",
+                "value": "<% row.date %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "memoCol",
+              "label": "Memo",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMemo",
+                "value": "<% row.memo %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "amountCol",
+              "label": "Amount",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "currency",
+                "id": "expAmount",
+                "currencyCode": "<% row.amount.currency %>",
+                "value": "<% row.amount.value %>",
+                "showCurrencySymbol": true,
+                "fractionDigits": 2
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "merchantCol",
+              "label": "Merchant",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMerchant",
+                "value": "<% row.merchant %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryStatusColId",
+              "label": "Entry Status",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expStatus",
+                "value": "<% row.expenseEntryStatus.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryTypeColId",
+              "label": "Entry Type",
+              "cellTemplate": {
+                "type": "text",
+                "id": "expType",
+                "value": "<% row.entryType.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryActionsCol",
+              "label": "Actions",
+              "cellTemplate": {
+                "type": "section",
+                "children": [
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "View",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "getExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "Edit",
+                    "render": "<% row.expenseEntryStatus.descriptor == 'New' %>",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "patchExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "id": "allExpensesExpensed",
+          "label": "Processed Expenses",
+          "rows": "<% getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed') %>",
+          "rowVariableName": "row",
+          "columns": [
+            {
+              "type": "column",
+              "columnId": "dateCol",
+              "label": "Date",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "date",
+                "id": "expDate",
+                "value": "<% row.date %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "categoryCol",
+              "label": "Category",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expCategory",
+                "value": "<% row.expenseItem.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "memoCol",
+              "label": "Memo",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMemo",
+                "value": "<% row.memo %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "amountCol",
+              "label": "Amount",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "currency",
+                "id": "expAmount",
+                "currencyCode": "<% row.amount.currency %>",
+                "value": "<% row.amount.value %>",
+                "showCurrencySymbol": true,
+                "fractionDigits": 2
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "merchantCol",
+              "label": "Merchant",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expMerchant",
+                "value": "<% row.merchant %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryStatusColId",
+              "label": "Entry Status",
+              "sortableAndFilterable": true,
+              "cellTemplate": {
+                "type": "text",
+                "id": "expStatus",
+                "value": "<% row.expenseEntryStatus.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryTypeColId",
+              "label": "Entry Type",
+              "cellTemplate": {
+                "type": "text",
+                "id": "expType",
+                "value": "<% row.entryType.descriptor %>"
+              }
+            },
+            {
+              "type": "column",
+              "columnId": "entryActionsCol",
+              "label": "Actions",
+              "cellTemplate": {
+                "type": "section",
+                "children": [
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "View",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "getExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  },
+                  {
+                    "type": "button",
+                    "action": "AUXILIARY",
+                    "label": "Edit",
+                    "render": "<% row.expenseEntryStatus.descriptor == 'New' %>",
+                    "taskReference": {
+                      "type": "taskReference",
+                      "taskId": "patchExpenseEntry",
+                      "parameterBindings": {
+                        "expenseEntryWID": "<% row.id %>"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "NewExpensesTotalWidget",
+          "label": "Total (All New Expenses)",
+          "value": "<%           
+            let newExpensesStrings= getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'New').map(row => row.amount.value ?? 0)
+            let newExpensesNumbers = newExpensesStrings.map(number => number:toBigDecimal(number , 2, 'UNNECESSARY'))
+            pageVariables.newExpTotal = newExpensesNumbers.reduce((x, y) => {x + y})         
+          %>"
+        },
+        {
+          "type": "text",
+          "id": "NewExpensesTotalWidget",
+          "label": "Total (All Processed Expenses)",
+          "value": "<%           
+            let processedExpensesStrings= getExpenseEntries.data.filter(row => row.expenseEntryStatus.descriptor == 'Expensed').map(row => row.amount.value ?? 0)
+            let processedExpensesNumbers = processedExpensesStrings.map(number => number:toBigDecimal(number , 2, 'UNNECESSARY'))
+            pageVariables.processedExpTotal = processedExpensesNumbers.reduce((x, y) => {x + y})         
+          %>"
+        },
+        {
+          "type": "percentBarChart2",
+          "showOutline": true,
+          "categoryDataSet": {
+            "name": "Entry Status",
+            "value": "<% ['Total','New'] %>"
+          },
+          "data": "<% [{'newTotalExp':pageVariables.newExpTotal}, {'procTotalExp':pageVariables.processedExpTotal}] %>",
+          "dataVariableName": "data",
+          "animateOnLoad": true,
+          "measurementDataSets": [
+            {
+              "name": "New",
+              "value": "<% data.newTotalExp %>"
+            },
+            {
+              "name": "Processed",
+              "value": "<% data.procTotalExp %>"
+            }
+          ]
+        },
+        {
+          "type": "clusteredBarChart2",
+          "showOutline": true,
+          "animateOnLoad": true,
+          "categoryDataSet": {
+            "name": "Entry Status",
+            "value": "<% ['Total','New'] %>"
+          },
+          "data": "<% [{'newTotalExp':pageVariables.newExpTotal}, {'procTotalExp':pageVariables.processedExpTotal}] %>",
+          "dataVariableName": "data",
+          "measurementDataSets": [
+            {
+              "name": "New",
+              "value": "<% data.newTotalExp %>"
+            },
+            {
+              "name": "Processed",
+              "value": "<% data.procTotalExp %>"
+            }
+          ],
+          "measurementAxisOptions": {}
+        }
+      ]
+    },
+    "footer": {
+      "type": "footer",
+      "children": [
+        {
+          "type": "pod",
+          "podId": "homePod"
+        }
+      ]
+    }
+  }
+}
